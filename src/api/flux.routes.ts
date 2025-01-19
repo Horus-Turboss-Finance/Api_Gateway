@@ -115,6 +115,27 @@ export const FinancialServices1 = {
       }
     }
   },
+  "/wallet" : {
+    "POST" : (port : number) : {url : string, blob : boolean} => {
+      return {url : `http://127.0.0.1:${port}/wallet`, blob : false}
+    },
+    "PUT" : (port : number) : {url : string, blob : boolean} => {
+      return {url : `http://127.0.0.1:${port}/wallet`, blob : false}
+    },
+    "DELETE" : (port : number) : {url : string, blob : boolean} => {
+      return {url : `http://127.0.0.1:${port}/wallet`, blob : false}
+    },
+    "/find" : {
+      "GET" : (port : number) : {url : string, blob : boolean} => {
+        return {url : `http://127.0.0.1:${port}/wallet/find/all`, blob : false}
+      },
+      '/:id' : {
+        "GET" : (port : number) : {url : string, blob : boolean} => {
+          return {url : `http://127.0.0.1:${port}/wallet/find/id`, blob : false}
+        },
+      }
+    }
+  },
   "/ping" : {
     "GET" : (port : number) : {url : string, blob : boolean} => {
       return {url : `http://127.0.0.1:${port}/ping`, blob : false}

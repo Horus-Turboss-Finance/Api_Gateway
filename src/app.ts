@@ -3,7 +3,7 @@ import express, { NextFunction, Request, Response } from "express";
 import { catchFile } from "./utils/catchfile";
 import { findPath } from "./utils/URL_table";
 import fileUpload from "express-fileupload";
-import axios, { ResponseType } from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import path from "path";
 import fs from 'fs';  
 
@@ -57,34 +57,38 @@ app.use('/api/*', catchSync(async (req : Request, res : Response, next : NextFun
     req.headers.trust = env.PASSWORD_SERVICE;
     req.headers.host = adress ?? "";
 
+    let method = req.method.toLowerCase()
+    let dataRequest : any;
     try{
-        let option : any = {
-            responseType: (blob)? 'stream' : 'json',
-            method: req.method.toLowerCase(),
+        let option : AxiosRequestConfig<any> = {
+            responseType: (blob)? 'stream' : 'document',
             validateStatus: () => true,
             headers : req.headers,
             timeout: 500,
-            url : url ?? "",
-            data : ''
         }
-
 
         /* Si c'est une requete normal alors réponse et gestion normale */
         if(!req.files){
-            option.data = req.body
+            dataRequest = req.body
         }else{
             /* Sinon on récupère un "form-data" du ou des fichiers */
             let form = catchFile(req)
-            option.data = form
+            // option.responseType = 'stream'
+            dataRequest = form
         }
         
         /* On l'envoie à cette adresse */
-        let requestAxios = await axios.request(option)
+        /* @ts-ignore */
+        let {data, headers, status} = await axios[method](url, dataRequest, option)
+
+        console.log(";", data)
+
+        console.log("!", await data)
 
         /* Si c'est un fichier ! On le recup et le traite différemment (comme pour le form) */
         if(blob){
             let chemin ;
-            switch(requestAxios.headers["content-type"]){
+            switch(headers["content-type"]){
                 case "image/png":
                     chemin = path.resolve('./tmp', `${Date.now()}`.slice(-6)+".png")
                     break;
@@ -98,13 +102,13 @@ app.use('/api/*', catchSync(async (req : Request, res : Response, next : NextFun
                     chemin = path.resolve('./tmp', `${Date.now()}`.slice(-6)+".gif")
                     break;
                 default:
-                    console.log(requestAxios.headers["content-type"])
+                    console.log(headers["content-type"])
                     return next(new ResponseException('Fichier bizarre...').BadRequest());
             }
 
             const writer = fs.createWriteStream(chemin)
 
-            requestAxios.data.pipe(writer)
+            data.pipe(writer)
 
             try{
                 await new Promise((resolve, reject) => {
@@ -127,12 +131,10 @@ app.use('/api/*', catchSync(async (req : Request, res : Response, next : NextFun
                 return next(new ResponseException("Votre fichier n'est pas disponible").UnknownError())
             }
         }
-        /* On récupère la réponse */
-        let response = requestAxios.data
         
         /* On la renvoie */
         /* @ts-ignore */
-        next(new ResponseException(response.data ?? "")[response.status ?? "500"]())
+        next(new ResponseException(data ?? "")[status ?? "500"]())
     }catch(e){
         /* S'il y a une erreur on la récupère et répond. */
         if (axios.isAxiosError(e)) {
