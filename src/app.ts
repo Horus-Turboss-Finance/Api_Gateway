@@ -1,10 +1,12 @@
 import { ResponseException, log, middleware, params } from "packages";
 import express, { NextFunction, Request, Response } from "express";
+import axios, { AxiosRequestConfig } from "axios";
 import { catchFile } from "./utils/catchfile";
 import { findPath } from "./utils/URL_table";
 import fileUpload from "express-fileupload";
 import axios, { AxiosRequestConfig } from "axios";
 import path from "path";
+import cors from 'cors';
 import fs from 'fs';  
 
 const app = express()
@@ -34,6 +36,8 @@ app.use(express.urlencoded({
     extended: true,
 }))
 
+app.use(cors())
+
 app.use(fileUpload({
     createParentPath: true,
     abortOnLimit : true,
@@ -53,15 +57,18 @@ app.use(fileUpload({
 app.use('/api/*', catchSync(async (req : Request, res : Response, next : NextFunction) => {
     let {adress, url, blob} = await findPath(req, next, env)
 
+    if(!adress || !url || blob === undefined) return;
+    
     /* Ajoute le mdp d'auth interservice et normalisation de l'header */
     req.headers.trust = env.PASSWORD_SERVICE;
-    req.headers.host = adress ?? "";
+    req.headers.host = `http://127.0.0.1:${adress}`;
 
     let method = req.method.toLowerCase()
     let dataRequest : any;
     try{
         let option : AxiosRequestConfig<any> = {
-            responseType: (blob)? 'stream' : 'document',
+            responseType: (blob)? 'stream' : 'json',
+            method: req.method.toLowerCase(),
             validateStatus: () => true,
             headers : req.headers,
             timeout: 500,
@@ -134,13 +141,14 @@ app.use('/api/*', catchSync(async (req : Request, res : Response, next : NextFun
         
         /* On la renvoie */
         /* @ts-ignore */
-        next(new ResponseException(data ?? "")[status ?? "500"]())
+        next(new ResponseException(requestAxios.data.data ?? "")[requestAxios.status ?? "500"]())
     }catch(e){
         /* S'il y a une erreur on la récupère et répond. */
         if (axios.isAxiosError(e)) {
             /* @ts-ignore */
-            throw new ResponseException(e.response ?? "")[e.response ?? "500"]()
+            throw new ResponseException(e.response?.data.data ?? "")[e.response?.status ?? "500"]()
         } else {
+            console.log(e)
             throw new ResponseException().UnknownError()
         }
     }

@@ -149,37 +149,37 @@
       - [*Exemple de requête*](#exemple-de-requête-22)
       - [Response Parameters :](#response-parameters--22)
       - [*Exemple de réponse*](#exemple-de-réponse-22)
-  - [WALLET](#wallet)
-    - [Create Wallet](#create-wallet)
-      - [URL](#url-23)
-      - [Request Parameters :](#request-parameters--23)
-      - [*Exemple de requête*](#exemple-de-requête-23)
-      - [Response Parameters :](#response-parameters--23)
-      - [*Exemple de réponse*](#exemple-de-réponse-23)
-    - [Update Wallet](#update-wallet)
-      - [URL](#url-24)
-      - [Request Parameters :](#request-parameters--24)
-      - [*Exemple de requête*](#exemple-de-requête-24)
-      - [Response Parameters :](#response-parameters--24)
-      - [*Exemple de réponse*](#exemple-de-réponse-24)
-    - [Delete Wallet](#delete-wallet)
-      - [URL](#url-25)
-      - [Request Parameters :](#request-parameters--25)
-      - [*Exemple de requête*](#exemple-de-requête-25)
-      - [Response Parameters :](#response-parameters--25)
-      - [*Exemple de réponse*](#exemple-de-réponse-25)
-    - [Find all user Wallet](#find-all-user-wallet)
-      - [URL](#url-26)
-      - [Request Parameters :](#request-parameters--26)
-      - [*Exemple de requête*](#exemple-de-requête-26)
-      - [Response Parameters :](#response-parameters--26)
-      - [*Exemple de réponse*](#exemple-de-réponse-26)
-    - [Find Wallet By Id](#find-wallet-by-id)
-      - [URL](#url-27)
-      - [Request Parameters :](#request-parameters--27)
-      - [*Exemple de requête*](#exemple-de-requête-27)
-      - [Response Parameters :](#response-parameters--27)
-      - [*Exemple de réponse*](#exemple-de-réponse-27)
+    - [WALLET](#wallet)
+      - [Create Wallet](#create-wallet)
+        - [URL](#url-23)
+        - [Request Parameters :](#request-parameters--23)
+        - [*Exemple de requête*](#exemple-de-requête-23)
+        - [Response Parameters :](#response-parameters--23)
+        - [*Exemple de réponse*](#exemple-de-réponse-23)
+      - [Update Wallet](#update-wallet)
+        - [URL](#url-24)
+        - [Request Parameters :](#request-parameters--24)
+        - [*Exemple de requête*](#exemple-de-requête-24)
+        - [Response Parameters :](#response-parameters--24)
+        - [*Exemple de réponse*](#exemple-de-réponse-24)
+      - [Delete Wallet](#delete-wallet)
+        - [URL](#url-25)
+        - [Request Parameters :](#request-parameters--25)
+        - [*Exemple de requête*](#exemple-de-requête-25)
+        - [Response Parameters :](#response-parameters--25)
+        - [*Exemple de réponse*](#exemple-de-réponse-25)
+      - [Find all user Wallet](#find-all-user-wallet)
+        - [URL](#url-26)
+        - [Request Parameters :](#request-parameters--26)
+        - [*Exemple de requête*](#exemple-de-requête-26)
+        - [Response Parameters :](#response-parameters--26)
+        - [*Exemple de réponse*](#exemple-de-réponse-26)
+      - [Find Wallet By Id](#find-wallet-by-id)
+        - [URL](#url-27)
+        - [Request Parameters :](#request-parameters--27)
+        - [*Exemple de requête*](#exemple-de-requête-27)
+        - [Response Parameters :](#response-parameters--27)
+        - [*Exemple de réponse*](#exemple-de-réponse-27)
     - [Ping financial service](#ping-financial-service)
       - [URL](#url-28)
       - [Request Parameters :](#request-parameters--28)
@@ -1356,14 +1356,14 @@ GET https://cashsight.fr/api/v1/flux/transaction/date/find/:year/:month
 }
 ```
 
-### WALLET
-#### Create Wallet
-##### URL
+#### WALLET
+##### Create Wallet
+###### URL
 ```http
 POST https://cashsight.fr/api/v1/flux/wallet
 ```
 
-##### Request Parameters :
+###### Request Parameters :
 | Parameter  | Type     |
 | :--------- | :------: | 
 | `montant`  | `Number` |
@@ -1372,7 +1372,7 @@ POST https://cashsight.fr/api/v1/flux/wallet
 | `type`     | `Number` |
 | `tag`      | `String` |
 
-##### *Exemple de requête*
+###### *Exemple de requête*
 ```js
     let axios = require('axios')
     // ...Code existant...//
@@ -1391,14 +1391,14 @@ POST https://cashsight.fr/api/v1/flux/wallet
     .then(json => ...)
 ```
 
-##### Response Parameters :
+###### Response Parameters :
 | Parameter | Type | Description |
 | :-------- | :--: | :---------- |
 | `success` | `Boolean` | Validation si la requête s'est terminé sans problème où inversement |
 | `status` | `Interger` | Le code http de la réponse |
 | `data` | `User` | Result de la requête |
 
-##### *Exemple de réponse*
+###### *Exemple de réponse*
 ```js
 {
   success : true,
@@ -1407,13 +1407,13 @@ POST https://cashsight.fr/api/v1/flux/wallet
 }
 ```
 
-#### Update Wallet
-##### URL
+##### Update Wallet
+###### URL
 ```http
 PUT https://cashsight.fr/api/v1/flux/wallet
 ```
 
-##### Request Parameters :
+###### Request Parameters :
 | Parameter  | Type     |
 | :--------- | :------: | 
 | `montant`  | `Number` |
@@ -1422,7 +1422,7 @@ PUT https://cashsight.fr/api/v1/flux/wallet
 | `tag`      | `String` |
 | `id`       | `String` |
 
-##### *Exemple de requête*
+###### *Exemple de requête*
 ```js
     let axios = require('axios')
     // ...Code existant...//
@@ -1441,14 +1441,16 @@ PUT https://cashsight.fr/api/v1/flux/wallet
     .then(json => ...)
 ```
 
-##### Response Parameters :
+
+###### Response Parameters :
 | Parameter | Type | Description |
 | :-------- | :--: | :---------- |
 | `success` | `Boolean` | Validation si la requête s'est terminé sans problème où inversement |
 | `status` | `Interger` | Le code http de la réponse |
 | `data` | `User` | Result de la requête |
 
-##### *Exemple de réponse*
+
+###### *Exemple de réponse*
 ```js
 {
   success : true,
@@ -1457,19 +1459,22 @@ PUT https://cashsight.fr/api/v1/flux/wallet
 }
 ```
 
-#### Delete Wallet
-##### URL
+
+##### Delete Wallet
+###### URL
 ```http
 DELETE https://cashsight.fr/api/v1/flux/wallet
 ```
 
-##### Request Parameters :
+
+###### Request Parameters :
 | Parameter  | Type     |
 | :--------- | :------: | 
 | `token`    | `String` |
 | `id`       | `String` |
 
-##### *Exemple de requête*
+
+###### *Exemple de requête*
 ```js
     let axios = require('axios')
     // ...Code existant...//
@@ -1485,14 +1490,15 @@ DELETE https://cashsight.fr/api/v1/flux/wallet
     .then(json => ...)
 ```
 
-##### Response Parameters :
+
+###### Response Parameters :
 | Parameter | Type | Description |
 | :-------- | :--: | :---------- |
 | `success` | `Boolean` | Validation si la requête s'est terminé sans problème où inversement |
 | `status` | `Interger` | Le code http de la réponse |
 | `data` | `User` | Result de la requête |
 
-##### *Exemple de réponse*
+###### *Exemple de réponse*
 ```js
 {
   success : true,
@@ -1501,13 +1507,13 @@ DELETE https://cashsight.fr/api/v1/flux/wallet
 }
 ```
 
-#### Find all user Wallet
-##### URL
+##### Find all user Wallet
+###### URL
 ```http
 GET https://cashsight.fr/api/v1/flux/wallet/find
 ```
 
-##### Request Parameters :
+###### Request Parameters :
 | Parameter  | Type     |
 | :--------- | :------: | 
 | `montant`  | `Number` |
@@ -1516,7 +1522,7 @@ GET https://cashsight.fr/api/v1/flux/wallet/find
 | `tag`      | `String` |
 | `id`       | `String` |
 
-##### *Exemple de requête*
+###### *Exemple de requête*
 ```js
     let axios = require('axios')
     // ...Code existant...//
@@ -1531,14 +1537,14 @@ GET https://cashsight.fr/api/v1/flux/wallet/find
     .then(json => ...)
 ```
 
-##### Response Parameters :
+###### Response Parameters :
 | Parameter | Type | Description |
 | :-------- | :--: | :---------- |
 | `success` | `Boolean` | Validation si la requête s'est terminé sans problème où inversement |
 | `status` | `Interger` | Le code http de la réponse |
 | `data` | `User` | Result de la requête |
 
-##### *Exemple de réponse*
+###### *Exemple de réponse*
 ```js
 {
   success : true,
@@ -1547,18 +1553,18 @@ GET https://cashsight.fr/api/v1/flux/wallet/find
 }
 ```
 
-#### Find Wallet By Id
-##### URL
+##### Find Wallet By Id
+###### URL
 ```http
 GET https://cashsight.fr/api/v1/flux/wallet/find/:id
 ```
 
-##### Request Parameters :
+###### Request Parameters :
 | Parameter  | Type     |
 | :--------- | :------: | 
 | `token`    | `String` |
 
-##### *Exemple de requête*
+###### *Exemple de requête*
 ```js
     let axios = require('axios')
     // ...Code existant...//
@@ -1573,14 +1579,14 @@ GET https://cashsight.fr/api/v1/flux/wallet/find/:id
     .then(json => ...)
 ```
 
-##### Response Parameters :
+###### Response Parameters :
 | Parameter | Type | Description |
 | :-------- | :--: | :---------- |
 | `success` | `Boolean` | Validation si la requête s'est terminé sans problème où inversement |
 | `status` | `Interger` | Le code http de la réponse |
 | `data` | `User` | Result de la requête |
 
-##### *Exemple de réponse*
+###### *Exemple de réponse*
 ```js
 {
   success : true,
