@@ -1441,12 +1441,14 @@ PUT https://cashsight.fr/api/v1/flux/wallet
     .then(json => ...)
 ```
 
+
 ###### Response Parameters :
 | Parameter | Type | Description |
 | :-------- | :--: | :---------- |
 | `success` | `Boolean` | Validation si la requête s'est terminé sans problème où inversement |
 | `status` | `Interger` | Le code http de la réponse |
 | `data` | `User` | Result de la requête |
+
 
 ###### *Exemple de réponse*
 ```js
@@ -1457,17 +1459,20 @@ PUT https://cashsight.fr/api/v1/flux/wallet
 }
 ```
 
+
 ##### Delete Wallet
 ###### URL
 ```http
 DELETE https://cashsight.fr/api/v1/flux/wallet
 ```
 
+
 ###### Request Parameters :
 | Parameter  | Type     |
 | :--------- | :------: | 
 | `token`    | `String` |
 | `id`       | `String` |
+
 
 ###### *Exemple de requête*
 ```js
@@ -1484,6 +1489,7 @@ DELETE https://cashsight.fr/api/v1/flux/wallet
     .then(res => res.json())
     .then(json => ...)
 ```
+
 
 ###### Response Parameters :
 | Parameter | Type | Description |

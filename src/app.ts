@@ -4,6 +4,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import { catchFile } from "./utils/catchfile";
 import { findPath } from "./utils/URL_table";
 import fileUpload from "express-fileupload";
+import axios, { AxiosRequestConfig } from "axios";
 import path from "path";
 import cors from 'cors';
 import fs from 'fs';  
@@ -71,26 +72,30 @@ app.use('/api/*', catchSync(async (req : Request, res : Response, next : NextFun
             validateStatus: () => true,
             headers : req.headers,
             timeout: 500,
-            url : url ?? "",
-            data : ''
         }
 
         /* Si c'est une requete normal alors réponse et gestion normale */
         if(!req.files){
-            option.data = req.body
+            dataRequest = req.body
         }else{
             /* Sinon on récupère un "form-data" du ou des fichiers */
             let form = catchFile(req)
-            option.data = form
+            // option.responseType = 'stream'
+            dataRequest = form
         }
         
         /* On l'envoie à cette adresse */
-        let requestAxios = await axios.request(option)
+        /* @ts-ignore */
+        let {data, headers, status} = await axios[method](url, dataRequest, option)
+
+        console.log(";", data)
+
+        console.log("!", await data)
 
         /* Si c'est un fichier ! On le recup et le traite différemment (comme pour le form) */
         if(blob){
             let chemin ;
-            switch(requestAxios.headers["content-type"]){
+            switch(headers["content-type"]){
                 case "image/png":
                     chemin = path.resolve('./tmp', `${Date.now()}`.slice(-6)+".png")
                     break;
@@ -104,13 +109,13 @@ app.use('/api/*', catchSync(async (req : Request, res : Response, next : NextFun
                     chemin = path.resolve('./tmp', `${Date.now()}`.slice(-6)+".gif")
                     break;
                 default:
-                    console.log(requestAxios.headers["content-type"])
+                    console.log(headers["content-type"])
                     return next(new ResponseException('Fichier bizarre...').BadRequest());
             }
 
             const writer = fs.createWriteStream(chemin)
 
-            requestAxios.data.pipe(writer)
+            data.pipe(writer)
 
             try{
                 await new Promise((resolve, reject) => {
