@@ -15,6 +15,10 @@ let main = async () => {
   if(!logSys) throw new Error("LogSys error : LogSys n'est pas monté dans le fichier `app.ts` sous le format `logSys`");
   if(!env) throw new Error("Env error : Env n'est pas monté dans le fichier `app.ts` sous le format `envLoad`")
 
+  app.listen(8080, "192.168.1.2", () => {
+    console.log("listening on 192.168.1.2:8080")
+  })
+
   app.listen(env.PORT_APIGATEWAY, env.IP_APIGATEWAY, () => {
     logSys.ServiceInfo(inAppServiceName.app, `Connect Url : ${env.IP_APIGATEWAY}:${env.PORT_APIGATEWAY}`)
 
