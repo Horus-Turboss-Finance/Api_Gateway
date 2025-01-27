@@ -34,7 +34,7 @@
     "express-fileupload": "^1.5.1",
     "express-rate-limit": "^7.4.1",
     "form-data": "^4.0.1",
-    "packages": "github:Horus-Turboss-Finance/Packages"
+    "packages": "github:Horus-Turboss-Finance/Packages#developpement-ui"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
