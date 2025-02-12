@@ -54,35 +54,37 @@ app.use(fileUpload({
 */
 
 app.use('/api/*', catchSync(async (req : Request, res : Response, next : NextFunction) => {
-    let {adress, url, blob} = await findPath(req, next, env)
+    let {adress, url, blob} = await findPath(req, next, env);
 
     if(!adress || !url || blob === undefined) return;
     
+    if(req.headers["content-length"]) delete req.headers["content-length"]
+
     /* Ajoute le mdp d'auth interservice et normalisation de l'header */
     req.headers.trust = env.PASSWORD_SERVICE;
-    req.headers.host = `http://127.0.0.1:${adress}`;
+    req.headers.host = `http://0.0.0.0:80`;
+    req.headers["content-type"] = `application/json`;
 
-    let dataRequest : any;
     try{
         let option : AxiosRequestConfig<any> = {
             responseType: (blob)? 'stream' : 'json',
             method: req.method.toLowerCase(),
             validateStatus: () => true,
             headers : req.headers,
-            timeout: 500,
             url : url ?? "",
-            data : ''
+            timeout: 5000,
+            data : '',
         }
 
         /* Si c'est une requete normal alors réponse et gestion normale */
         if(!req.files){
-            option.data = req.body
+            option.data = req.body;
         }else{
             /* Sinon on récupère un "form-data" du ou des fichiers */
-            let form = catchFile(req)
-            option.data = form
+            let form = await catchFile(req, next);
+            option.data = JSON.stringify(form);
         }
-        
+
         /* On l'envoie à cette adresse */
         /* @ts-ignore */
         let requestAxios = await axios.request(option)
@@ -113,8 +115,8 @@ app.use('/api/*', catchSync(async (req : Request, res : Response, next : NextFun
 
             try{
                 await new Promise((resolve, reject) => {
-                    writer.on('finish', resolve)
-                    writer.on('error', reject)
+                    writer.on('finish', () => resolve('e'))
+                    writer.on('error', (e) => reject(e))
                 })
 
                 return res.sendFile(chemin, (err) => {
@@ -139,6 +141,7 @@ app.use('/api/*', catchSync(async (req : Request, res : Response, next : NextFun
     }catch(e){
         /* S'il y a une erreur on la récupère et répond. */
         if (axios.isAxiosError(e)) {
+            console.log(e)
             /* @ts-ignore */
             throw new ResponseException(e.response?.data.data ?? "")[e.response?.status ?? "500"]()
         } else {

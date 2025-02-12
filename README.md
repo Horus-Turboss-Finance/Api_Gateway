@@ -169,69 +169,73 @@
       - [*Exemple de réponse*](#exemple-de-réponse-25)
     - [Find all user Wallet](#find-all-user-wallet)
       - [URL](#url-26)
-      - [Request Parameters :](#request-parameters--26)
       - [*Exemple de requête*](#exemple-de-requête-26)
       - [Response Parameters :](#response-parameters--26)
       - [*Exemple de réponse*](#exemple-de-réponse-26)
     - [Find Wallet By Id](#find-wallet-by-id)
       - [URL](#url-27)
-      - [Request Parameters :](#request-parameters--27)
+      - [Request Parameters :](#request-parameters--26)
       - [*Exemple de requête*](#exemple-de-requête-27)
       - [Response Parameters :](#response-parameters--27)
       - [*Exemple de réponse*](#exemple-de-réponse-27)
     - [Ping financial service](#ping-financial-service)
       - [URL](#url-28)
-      - [Request Parameters :](#request-parameters--28)
+      - [Request Parameters :](#request-parameters--27)
       - [*Exemple de requête*](#exemple-de-requête-28)
       - [Response Parameters :](#response-parameters--28)
       - [*Exemple de réponse*](#exemple-de-réponse-28)
   - [USER](#user)
     - [Inscription](#inscription)
       - [URL](#url-29)
-      - [Request Parameters :](#request-parameters--29)
+      - [Request Parameters :](#request-parameters--28)
       - [*Exemple de requête*](#exemple-de-requête-29)
       - [Response Parameters :](#response-parameters--29)
       - [*Exemple de réponse*](#exemple-de-réponse-29)
     - [Connexion](#connexion)
       - [URL](#url-30)
-      - [Request Parameters :](#request-parameters--30)
+      - [Request Parameters :](#request-parameters--29)
       - [*Exemple de requête*](#exemple-de-requête-30)
       - [Response Parameters :](#response-parameters--30)
       - [*Exemple de réponse*](#exemple-de-réponse-30)
     - [Update password](#update-password)
       - [URL](#url-31)
-      - [Request Parameters :](#request-parameters--31)
+      - [Request Parameters :](#request-parameters--30)
       - [*Exemple de requête*](#exemple-de-requête-31)
       - [Response Parameters :](#response-parameters--31)
       - [*Exemple de réponse*](#exemple-de-réponse-31)
     - [Get account details](#get-account-details)
       - [URL](#url-32)
-      - [Request Parameters :](#request-parameters--32)
+      - [Request Parameters :](#request-parameters--31)
       - [*Exemple de requête*](#exemple-de-requête-32)
       - [Response Parameters :](#response-parameters--32)
       - [*Exemple de réponse*](#exemple-de-réponse-32)
     - [Update account](#update-account)
       - [URL](#url-33)
-      - [Request Parameters :](#request-parameters--33)
+      - [Request Parameters :](#request-parameters--32)
       - [*Exemple de requête*](#exemple-de-requête-33)
       - [Response Parameters :](#response-parameters--33)
       - [*Exemple de réponse*](#exemple-de-réponse-33)
     - [Delete account](#delete-account)
       - [URL](#url-34)
-      - [Request Parameters :](#request-parameters--34)
+      - [Request Parameters :](#request-parameters--33)
       - [*Exemple de requête*](#exemple-de-requête-34)
       - [Response Parameters :](#response-parameters--34)
       - [*Exemple de réponse*](#exemple-de-réponse-34)
     - [Update profil picture](#update-profil-picture)
       - [URL](#url-35)
-      - [Request Parameters :](#request-parameters--35)
+      - [Request Parameters :](#request-parameters--34)
       - [*Exemple de requête*](#exemple-de-requête-35)
       - [Response Parameters :](#response-parameters--35)
       - [*Exemple de réponse*](#exemple-de-réponse-35)
-    - [Ping user service](#ping-user-service)
+    - [Get avatar by user id](#get-avatar-by-user-id)
       - [URL](#url-36)
+      - [Request Parameters :](#request-parameters--35)
       - [*Exemple de requête*](#exemple-de-requête-36)
       - [Response Parameters :](#response-parameters--36)
+    - [Ping user service](#ping-user-service)
+      - [URL](#url-37)
+      - [*Exemple de requête*](#exemple-de-requête-37)
+      - [Response Parameters :](#response-parameters--37)
       - [*Exemple de réponse*](#exemple-de-réponse-36)
 - [About :](#about-)
 
@@ -254,7 +258,6 @@
 - `axios` - packages pour les requêtes [^13].
 - `express` - Framework web minimaliste, rapide et sans opinion pour Node.js [^14].
 - `express-rate-limit` - Module pour limiter les connexions à l'api [^15].
-- `form-data` - Permet d'envoyer les fichiers entre services [^16].
 
 ## Backend installation
 
@@ -630,6 +633,7 @@ PUT https://cashsight.fr/api/v1/flux/categorie
 | `token`   | `String` |
 | `color`   | `String` |
 | `nom`     | `String` |
+| `id` | `String` |
 
 ##### *Exemple de requête*
 ```js
@@ -642,6 +646,7 @@ PUT https://cashsight.fr/api/v1/flux/categorie
             nom : input.nom,
             color : input.color,
             token : sessionStorage.token,
+            id : input.id
         },
     })
     .then(res => res.json())
@@ -862,6 +867,7 @@ PUT https://cashsight.fr/api/v1/flux/objectif
 | `title` | `string` | Le titre de l'objectif |
 | `montant` | `Number` | Le montant de l'objectif |
 | `end` | `Number` | La date de fin de l'objectif |
+| `id` | `String` | L'id de l'objectif à modifier |
 
 ##### *Exemple de requête*
 ```js
@@ -875,6 +881,7 @@ PUT https://cashsight.fr/api/v1/flux/objectif
             montant : input.montant,
             title : input.title,
             end : input.end,
+            id : input.id
         },
     })
     .then(res => res.json())
@@ -1329,7 +1336,7 @@ GET https://cashsight.fr/api/v1/flux/transaction/date/find/:year/:month
     let axios = require('axios')
     // ...Code existant...//
     axios.request({
-        url: `https://cashsight.fr/api/v1/flux/budget/find/66b3af30ebbb97b1d38821f8`,
+        url: 'https://cashsight.fr/api/v1/flux/transaction/find/date/2024/4',
         method: 'GET',
         body: {
             token : sessionStorage.token,
@@ -1511,15 +1518,6 @@ DELETE https://cashsight.fr/api/v1/flux/wallet
 GET https://cashsight.fr/api/v1/flux/wallet/find
 ```
 
-##### Request Parameters :
-| Parameter  | Type     |
-| :--------- | :------: | 
-| `montant`  | `Number` |
-| `devise`   | `String` |
-| `token`    | `String` |
-| `tag`      | `String` |
-| `id`       | `String` |
-
 ##### *Exemple de requête*
 ```js
     let axios = require('axios')
@@ -1655,7 +1653,7 @@ POST https://cashsight.fr/api/v1/user/sign/up
     // ...Code existant...//
     axios.request({
         url: `https://cashsight.fr/api/v1/user/sign/up`,
-        method: 'GET',
+        method: 'POST',
         body: {
             password : input.password, 
             username : input.username,
@@ -1734,8 +1732,7 @@ PUT https://cashsight.fr/api/v1/user/password
 ##### Request Parameters : 
 | Parameter     |   Type   |            Description            |
 | :------------ | :------: | :-------------------------------- |
-| `oldPassword` | `String` | Le mot de passe pour s'identifier |
-| `newPassword` | `String` | Le nouveau mdp pour s'identifier  |
+| `password` | `String` | Le nouveau mdp pour s'identifier  |
 | `token`       | `String` | Votre identifiant                 |
 
 ##### *Exemple de requête*
@@ -1746,8 +1743,7 @@ PUT https://cashsight.fr/api/v1/user/password
         url: `https://cashsight.fr/api/v1/user/password`,
         method: 'PUT',
         body: {
-            oldPassword : input.confirmPassword,
-            newPassword : input.Newpassword,
+            password : input.Newpassword,
             token : sessionStorage.token,
         },
     })
@@ -1921,7 +1917,7 @@ PUT https://cashsight.fr/api/v1/user/@me/avatar
     // ...Code existant...//
     axios.request({
         url: `https://cashsight.fr/api/v1/user/@me/avatar`,
-        method: 'GET',
+        method: 'PUT',
         body: {
             token : sessionStorage.token,
         },
@@ -1946,6 +1942,35 @@ PUT https://cashsight.fr/api/v1/user/@me/avatar
   data :  "Photo de profil bien mis à jour."
 }
 ```
+
+#### Get avatar by user id
+##### URL
+```http
+GET https://cashsight.fr/api/v1/user/avatar/:USER_ID
+```
+
+##### Request Parameters : 
+| Parameter | Type     | Max     | Description |
+| :-------- | :------: | :-----: | :---------- |
+| `token`   | `String` | &#9744; | Identifiant utilisateur |
+| `avatar`  | `File`   | `9Mb`   | Fichier img (png, jpg, jpeg, gif) only |
+
+##### *Exemple de requête*
+```js
+    let axios = require('axios')
+    // ...Code existant...//
+    axios.request({
+        url: `https://cashsight.fr/api/v1/user/avatar/6798e9e3195b1cbacf9fac07`,
+        method: 'GET',
+    })
+    .then(res => res.json())
+    .then(json => ...)
+```
+
+##### Response Parameters :
+| Parameter | Type | Description |
+| :-------- | :--: | :---------- |
+| `avatar` | `File` | Le fichier trouvé ou un message 404. |
 
 #### Ping user service
 ##### URL
@@ -2001,4 +2026,3 @@ Ref :
 [^13]: [Url du dépot `axios`](https://www.npmjs.com/package/axios)
 [^14]: [Url du dépot `express`](https://www.npmjs.com/package/express)
 [^15]: [Url du dépot `express-rate-limit`](https://www.npmjs.com/package/express-rate-limit)
-[^16]: [Url du dépot `form-data`](https://www.npmjs.com/package/form-data)

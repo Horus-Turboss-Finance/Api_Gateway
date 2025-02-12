@@ -38,7 +38,7 @@ export const UserService1 = {
       return {url : `http://127.0.0.1:${port}/@me`, blob : false}
     } ,
     "/avatar" : {
-      "PUT" : (port : number) : {url : string, blob : boolean} => {
+      "POST" : (port : number) : {url : string, blob : boolean} => {
         return {url : `http://127.0.0.1:${port}/@me/avatar`, blob : false}
       } 
     },
