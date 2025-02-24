@@ -50,6 +50,7 @@
     - [Create categorie](#create-categorie)
       - [URL](#url-6)
       - [Request Parameters :](#request-parameters--6)
+      - [Type params :](#type-params-)
       - [*Exemple de requête*](#exemple-de-requête-6)
       - [Response Parameters :](#response-parameters--6)
       - [*Exemple de réponse*](#exemple-de-réponse-6)
@@ -80,6 +81,7 @@
     - [Create objectif](#create-objectif)
       - [URL](#url-11)
       - [Request Parameters :](#request-parameters--11)
+      - [Type params :](#type-params--1)
       - [*Exemple de requête*](#exemple-de-requête-11)
       - [Response Parameters :](#response-parameters--11)
       - [*Exemple de réponse*](#exemple-de-réponse-11)
@@ -116,6 +118,7 @@
     - [Create Transaction](#create-transaction)
       - [URL](#url-17)
       - [Request Parameters :](#request-parameters--17)
+      - [Type params :](#type-params--2)
       - [*Exemple de requête*](#exemple-de-requête-17)
       - [Response Parameters :](#response-parameters--17)
       - [*Exemple de réponse*](#exemple-de-réponse-17)
@@ -152,6 +155,7 @@
     - [Create Wallet](#create-wallet)
       - [URL](#url-23)
       - [Request Parameters :](#request-parameters--23)
+      - [Type params :](#type-params--3)
       - [*Exemple de requête*](#exemple-de-requête-23)
       - [Response Parameters :](#response-parameters--23)
       - [*Exemple de réponse*](#exemple-de-réponse-23)
@@ -587,6 +591,16 @@ POST https://cashsight.fr/api/v1/flux/categorie
 | `color`    | `String` |
 | `type`     | `Number` |
 
+##### Type params : 
+| Parameter | Value | Remarques |
+| :--- | :---: | :--- |
+| `Dépenses` | `1` |
+| `Revenu` | `2` |
+| `Transfère Entrant` | `3` |
+| `Transfère Sortant` | `4` |
+| `Achat` | `5` | L'achat à la différence des dépenses étant une dépense entre une valeur financière (action, crypto, bien, etc) contre de l'argent et non un échange de bien ou de service de consommation |
+| `Vente` | `6` | La vente à la différence des revenu étant une recette entre une valeur financière (action, crypto, bien, etc) contre de l'argent et non un échange de pour un travail fournit ou un quelconque intérêt de livret |
+
 ##### *Exemple de requête*
 ```js
     let axios = require('axios')
@@ -815,6 +829,16 @@ POST https://cashsight.fr/api/v1/flux/objectif/
 | `start` | `Number` |
 | `end` | `Number` |
 | `type` | `Number` |
+
+##### Type params : 
+| Parameter | Value |
+| :--- | :---: |
+| `Achat de maison` | `1` |
+| `Remboursement de dette` | `2` |
+| `Achat de voiture` | `3` |
+| `Planification de retraite` | `4` |
+| `Planification de vacances` | `5` |
+| `Autre` | `6` |
 
 ##### *Exemple de requête*
 ```js
@@ -1097,6 +1121,16 @@ POST https://cashsight.fr/api/v1/flux/transaction
 | `date` | `Number` | 
 | `type` | `Number` | 
 
+##### Type params : 
+| Parameter | Value | Remarques |
+| :--- | :---: | :--- |
+| `Dépenses` | `1` |
+| `Revenu` | `2` |
+| `Transfère Entrant` | `3` |
+| `Transfère Sortant` | `4` |
+| `Achat` | `5` | L'achat à la différence des dépenses étant une dépense entre une valeur financière (action, crypto, bien, etc) contre de l'argent et non un échange de bien ou de service de consommation |
+| `Vente` | `6` | La vente à la différence des revenu étant une recette entre une valeur financière (action, crypto, bien, etc) contre de l'argent et non un échange de pour un travail fournit ou un quelconque intérêt de livret |
+
 ##### *Exemple de requête*
 ```js
     let axios = require('axios')
@@ -1376,6 +1410,18 @@ POST https://cashsight.fr/api/v1/flux/wallet
 | `token`    | `String` |
 | `type`     | `Number` |
 | `tag`      | `String` |
+
+##### Type params : 
+| Parameter | Value |
+| :--- | :---: |
+| `Courant` | `1` |
+| `Espèce` | `2` |
+| `Livret` | `3` |
+| `Investissement` | `4` |
+| `Crédit` | `5` |
+| `Assurance` | `6` |
+| `Retraite` | `7` |
+| `Autre` | `8` |
 
 ##### *Exemple de requête*
 ```js
